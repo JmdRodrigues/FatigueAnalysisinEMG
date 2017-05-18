@@ -8,7 +8,7 @@ from Peaks import detect_peaks
 from smooth import smooth
 from novainstrumentation import filter
 from matplotlib import cm
-from MethodsFMH import StartThresholdOtsu, CaclulateEachBurst, CreateInterpolatedBurstCWT
+from MethodsFMH import CalculateParameters, CreateInterpolatedBurstCWT, CalculateMeanBurstsParameters
 
 
 from perFreq import energy, CompareBE
@@ -131,8 +131,10 @@ end = 273433
 
 #rectus femoralis
 emg1 = signals[9093:273433, 3]
+# emg1 = signals[9093:100000, 3]
 #X
 accx = signals[9093:273433, 8]
+# accx = signals[9093:100000, 8]
 accy = signals[9093:273433, 9]
 accz = signals[9093:273433, 10]
 
@@ -154,7 +156,6 @@ freqs = np.arange(5, 250, 2)
 scales = 1000*freq2scale('morl', freqs)
 
 
-
 # print(scales)
 # scales = np.logspace(np.log10(3.28282828),np.log10(162.5), 200)
 # scales = np.arange(1.56, 30, 1)
@@ -165,8 +166,9 @@ scales = 1000*freq2scale('morl', freqs)
 
 coef, freqs=pywt.cwt(EMG, scales, 'morl', sampling_period=1/1000)
 
-# CreateInterpolatedBurstCWT(coef, pks)
-CaclulateEachBurst(pks, coef)
+MeanBursts = CreateInterpolatedBurstCWT(coef, pks)
+CalculateMeanBurstsParameters(MeanBursts)
+
 # Thresholds= StartThresholdOtsu(coef, 100)
 
 
