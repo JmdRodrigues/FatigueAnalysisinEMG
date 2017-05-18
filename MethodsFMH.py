@@ -68,6 +68,13 @@ def WCentroid(Burst):
 
 	centroidX = np.sum(np.multiply(range(0, len(BurstArrayX)), BurstArrayX))/(np.sum(BurstArrayX))
 	centroidY = np.sum(np.multiply(range(0, len(BurstArrayY)), BurstArrayY))/(np.sum(BurstArrayY))
+	
+	#Calculate Area Correctly:
+	pointsX = np.remainder(np.where(BurstArrayY>0)[0], columns)
+	pointsY = np.divide(np.where(BurstArrayY>0)[0], columns)
+	
+	plt.plot(pointsX, pointsY, 'o')
+	plt.show()
 
 	X = int(centroidX // lines)
 	Y = int(centroidY // columns)
